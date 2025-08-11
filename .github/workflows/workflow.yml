@@ -32,7 +32,7 @@ jobs:
         pip install -q -r requirements.txt
         git config --global --add safe.directory "$GITHUB_WORKSPACE"
         changes=$(git diff --name-only "$PR" "$MAIN")
-        changed_models=$(echo "$changes" | grep '^src/tsnkit/algorithms/.*\.py$' | xargs -n1 basename | sed 's/\.py$//' | tr '\n' ' ')
+        changed_models=$(echo "$changes" | grep '^tsnkit/algorithms/.*\.py$' | xargs -n1 basename | sed 's/\.py$//' | tr '\n' ' ')
         echo "models=$changed_models" >> "$GITHUB_OUTPUT"
         echo "$changed_models"
     
@@ -40,4 +40,3 @@ jobs:
       run: |
         python -m tsnkit.test.debug ${{steps.changes.outputs.models}} jrs_nw ls smt_wa --subset 
       
-    
