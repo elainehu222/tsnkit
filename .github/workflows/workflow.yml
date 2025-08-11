@@ -27,7 +27,7 @@ jobs:
       id: changes
       env:
         PR: ${{github.event.pull_request.head.sha}}
-        MAIN: $ {{github.event.pull_request.base.sha}}
+        MAIN: ${{github.event.pull_request.base.sha}}
       run: |
         pip install -q -r requirements.txt
         git config --global --add safe.directory "$GITHUB_WORKSPACE"
