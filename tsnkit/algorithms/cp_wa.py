@@ -8,7 +8,7 @@ Created:  2023-10-28T17:57:24.749Z
 from typing import Any, Dict, List
 import traceback
 from docplex.cp.model import CpoModel
-from .. import core as utils
+from .. import utils
 
 def benchmark(
     name, task_path, net_path, output_path="./", workers=1
@@ -145,8 +145,8 @@ class cp_wa:
 
     def add_delay_const(self):
         for s in self.task:
-            start = self.solver.start_of(self.phi[s][s.first_link][0])
-            end = self.solver.start_of(self.phi[s][s.last_link][-1])
+            start = self.solver.end_of(self.phi[s][s.first_link][0])
+            end = self.solver.start_of(self.phi[s][s.last_link][0])
             self.solver.add(end - start <= s.deadline)
 
     def add_frame_isolation_const(self):
@@ -237,3 +237,4 @@ if __name__ == "__main__":
     args = utils.parse_command_line_args()
     utils.Statistics().header()
     benchmark(args.name, args.task, args.net, args.output, args.workers)
+    
