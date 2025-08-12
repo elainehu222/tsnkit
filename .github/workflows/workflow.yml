@@ -38,5 +38,7 @@ jobs:
     
     - name: run test
       run: |
+        cd $GITHUB_WORKSPACE
+        pwd
         python -m tsnkit.test.debug ${{steps.changes.outputs.models}} jrs_nw ls smt_wa --subset 
       
