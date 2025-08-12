@@ -55,7 +55,6 @@ def run(
     data_path = SCRIPT_DIR + "/data/"
 
     py_environment = sys.executable
-    print("workflow-test")
 
     algorithms = [algorithms] if isinstance(algorithms, str) else algorithms
 
