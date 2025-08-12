@@ -8,7 +8,7 @@ Created:  2023-10-28T17:57:24.749Z
 from typing import Any, Dict, List
 import traceback
 from docplex.cp.model import CpoModel
-from .. import utils
+from .. import core as utils
 
 def benchmark(
     name, task_path, net_path, output_path="./", workers=1
