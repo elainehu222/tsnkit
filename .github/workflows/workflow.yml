@@ -1,4 +1,4 @@
-name: model workflow
+name: workflow
 
 on: 
   pull_request_target: 
@@ -22,6 +22,8 @@ jobs:
       with:
         fetch-depth: 0
         lfs: true
+        ref: ${{ github.event.pull_request.head.ref }}
+        repository: ${{ github.event.pull_request.head.repo.full_name }}
 
     - name: get changed algorithms
       id: changes
@@ -38,7 +40,5 @@ jobs:
     
     - name: run test
       run: |
-        cd $GITHUB_WORKSPACE
-        pwd
         python -m tsnkit.test.debug ${{steps.changes.outputs.models}} jrs_nw ls smt_wa --subset 
       
