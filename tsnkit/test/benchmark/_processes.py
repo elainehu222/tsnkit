@@ -73,7 +73,7 @@ def killif(main_proc, mem_limit, time_limit, sig, oom_queue):
                 elif (elapse_time > time_limit * 1.1 or mem > mem_limit) and proc.pid in pids_int:
                     proc.send_signal(signal.SIGKILL)
                     proc_time = proc.cpu_times().user
-                    oom_queue.put([round(proc.cpu_times().user, 3), mem])
+                    oom_queue.put([round(proc.cpu_times().user, 3), mem, proc.pid])
                     print_output("-", str(Result.unknown), proc_time, proc_time, mem / (1024 ** 2))
                     sig.value += 1
             except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
@@ -96,13 +96,6 @@ def str_flag(flag):
         return str(Result.unknown)
     else:
         return str(Result.error)
-
-
-def run(alg, file_num: str, workers: int):
-    path = SCRIPT_DIR + "/data/" + file_num
-    stats = alg(file_num, path + "_task.csv", path + "_topo.csv", workers=workers)
-
-    return stats.to_list()
 
 
 def mute():
