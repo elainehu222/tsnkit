@@ -6,7 +6,7 @@ import time
 import pandas as pd
 import numpy as np
 
-from . import draw, killif, mute, print_output, str_flag, run
+from . import draw, killif, mute, print_output, str_flag
 from ... import core as utils
 from multiprocessing import Pool, cpu_count, Value, Process, Queue
 
@@ -122,7 +122,6 @@ if __name__ == "__main__":
     oom.start()
 
     def store(output, verbose=True):
-        print("callback")
         # output = [task, result, algo_time, total_time, algo_mem, total_mem]
         flag = output[1]
         _task = output[0]
@@ -138,6 +137,13 @@ if __name__ == "__main__":
         sig.value += 1
 
     processes = {}
+
+    def run(alg, task_param: str, workers: int):
+        processes[os.getpid()] = task_param
+        task_num = task_param[1]
+        path = f"{SCRIPT_DIR}/data/{task_num}"
+        stats = alg(f"{task_param[0]}-{task_num}", path + "_task.csv", path + "_topo.csv", workers=workers)
+        return stats.to_list()
 
     with Pool(processes=cpu_count() // utils.NUM_CORE_LIMIT, maxtasksperchild=1, initializer=mute) as p:
         for task in tasks:
