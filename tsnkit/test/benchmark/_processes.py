@@ -101,7 +101,7 @@ def str_flag(flag):
 def mute():
     process = multiprocessing.current_process()
     process.daemon = False  # nested multiprocessing
-    sys.stdout = open(os.devnull, "w")
+    # sys.stdout = open(os.devnull, "w")
     sys.stderr = open(os.devnull, "w")
     warnings.filterwarnings("ignore")
 
