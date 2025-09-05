@@ -111,6 +111,7 @@ if __name__ == "__main__":
     manager = Manager()
     processes = manager.dict()
     manager_pid = manager._process.ident
+    print(manager_pid)
 
     oom = Process(
         target=killif,
