@@ -64,10 +64,10 @@ def killif(main_proc, mem_limit, time_limit, sig, oom_queue):
                 elapse_time = _current_time - start_time
                 if (elapse_time > time_limit or mem > mem_limit) and proc.pid not in pids_int:
                     proc_time = proc.cpu_times().user
-                    oom_queue.put([round(proc.cpu_times().user, 3), mem])
                     terminate_process(proc)
                     pids_int.append(proc.pid)
                     if sys.platform == "win32" or sys.platform == "cygwin":
+                        oom_queue.put([round(proc.cpu_times().user, 3), mem, proc.pid])
                         print_output("-", str(Result.unknown), proc_time, proc_time, mem / (1024 ** 2))
                         sig.value += 1
                 elif (elapse_time > time_limit * 1.1 or mem > mem_limit) and proc.pid in pids_int:
