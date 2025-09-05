@@ -11,6 +11,7 @@ from tqdm import tqdm
 
 from ...core import Result
 from ...simulation import tas
+from ...algorithms import dt
 
 SCRIPT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -111,6 +112,6 @@ def run(alg, task_param: str, workers: int):
     # print(os.getpid())
     task_num = task_param[1]
     path = SCRIPT_DIR + "/data/" + task_num
-    stats = alg(f"{task_param[0]}-{task_num}", path + "_task.csv", path + "_topo.csv", workers=workers)
+    stats = dt.benchmark(f"{task_param[0]}-{task_num}", path + "_task.csv", path + "_topo.csv", workers=workers)
     print("succ")
     return stats.to_list()
