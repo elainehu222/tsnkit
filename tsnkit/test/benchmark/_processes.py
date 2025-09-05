@@ -104,3 +104,13 @@ def mute():
     # sys.stdout = open(os.devnull, "w")
     # sys.stderr = open(os.devnull, "w")
     warnings.filterwarnings("ignore")
+
+def run(alg, task_param: str, workers: int):
+    print(f"running {task_param}")
+    # processes[os.getpid()] = task_param
+    # print(os.getpid())
+    task_num = task_param[1]
+    path = SCRIPT_DIR + "/data/" + task_num
+    stats = alg(f"{task_param[0]}-{task_num}", path + "_task.csv", path + "_topo.csv", workers=workers)
+    print("succ")
+    return stats.to_list()

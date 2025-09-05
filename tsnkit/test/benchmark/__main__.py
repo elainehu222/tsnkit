@@ -6,7 +6,7 @@ import time
 import pandas as pd
 import numpy as np
 
-from . import draw, killif, mute, print_output, str_flag
+from . import draw, killif, mute, print_output, str_flag, run
 from ... import core as utils
 from multiprocessing import Pool, cpu_count, Value, Process, Queue
 
@@ -138,16 +138,6 @@ if __name__ == "__main__":
         sig.value += 1
 
     processes = {}
-
-    def run(alg, task_param: str, workers: int):
-        print(f"running {task_param}")
-        # processes[os.getpid()] = task_param
-        # print(os.getpid())
-        task_num = task_param[1]
-        path = SCRIPT_DIR + "/data/" + task_num
-        stats = alg(f"{task_param[0]}-{task_num}", path + "_task.csv", path + "_topo.csv", workers=workers)
-        print("succ")
-        return stats.to_list()
 
     with Pool(processes=cpu_count() // utils.NUM_CORE_LIMIT, maxtasksperchild=1, initializer=mute) as p:
         for task in tasks:
