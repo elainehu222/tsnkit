@@ -2,7 +2,6 @@ import argparse
 import gc
 import os
 import time
-from idlelib.colorizer import matched_named_groups
 
 import pandas as pd
 import numpy as np
