@@ -139,6 +139,7 @@ if __name__ == "__main__":
     processes = {}
 
     def run(alg, task_param: str, workers: int):
+        print(f"running {task_param}")
         processes[os.getpid()] = task_param
         task_num = task[1]
         path = SCRIPT_DIR + "/data/" + task_num
