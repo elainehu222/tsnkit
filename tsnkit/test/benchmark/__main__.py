@@ -145,6 +145,7 @@ if __name__ == "__main__":
 
     def run(alg, task_param: str, workers: int):
         processes[os.getpid()] = task_param
+        print(processes.keys())
         task_num = task_param[1]
         path = f"{SCRIPT_DIR}/data/{task_num}"
         stats = alg(f"{task_param[0]}-{task_num}", path + "_task.csv", path + "_topo.csv", workers=workers)
