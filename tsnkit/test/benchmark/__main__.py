@@ -2,13 +2,14 @@ import argparse
 import gc
 import os
 import time
+from idlelib.colorizer import matched_named_groups
 
 import pandas as pd
 import numpy as np
 
 from . import draw, killif, mute, print_output, str_flag
 from ... import core as utils
-from multiprocessing import Pool, cpu_count, Value, Process, Queue
+from multiprocessing import Pool, cpu_count, Value, Process, Queue, Manager
 
 from ...algorithms import (at, cg, cp_wa, dt, i_ilp, i_omt, jrs_mc, jrs_nw, jrs_nw_l, jrs_wa, ls, ls_pl, ls_tb, smt_fr,
                        smt_nw, smt_pr, smt_wa)
@@ -141,11 +142,11 @@ if __name__ == "__main__":
             print_output(f"{_task}", str_flag(flag), output[2], output[3], output[4])
         sig.value += 1
 
-    processes = {}
+    manager = Manager()
+    processes = manager.dict()
 
-    def run(alg, task_param: str, workers: int):
-        processes[os.getpid()] = task_param
-        print(processes.keys())
+    def run(alg, task_param: str, workers: int, process_dict):
+        process_dict[os.getpid()] = task_param
         task_num = task_param[1]
         path = f"{SCRIPT_DIR}/data/{task_num}"
         stats = alg(f"{task_param[0]}-{task_num}", path + "_task.csv", path + "_topo.csv", workers=workers)
@@ -159,6 +160,7 @@ if __name__ == "__main__":
                     import_algorithm(task[0]).benchmark,
                     task,
                     utils.NUM_CORE_LIMIT, # workers
+                    processes
                 ),
                 callback=store,
             )
