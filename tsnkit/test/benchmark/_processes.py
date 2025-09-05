@@ -35,7 +35,7 @@ def print_output(name: str, flag: str, solve_time: float, total_time: float, tot
         flush=True)
 
 
-def killif(main_proc, mem_limit, time_limit, sig, oom_queue):
+def killif(main_proc, mem_limit, time_limit, sig, oom_queue, manager_pid):
     """
     Kill the process if it uses more than mem memory or more than time seconds
     Args:
@@ -56,6 +56,8 @@ def killif(main_proc, mem_limit, time_limit, sig, oom_queue):
                 if proc.ppid() != main_proc and "cpoptimizer" not in proc.name():
                     continue
                 if proc.pid == main_proc or proc.pid == self_proc:
+                    continue
+                if proc.pid == manager_pid:
                     continue
                 if not (sys.platform == "win32" or sys.platform == "cygwin") and proc.status() == psutil.STATUS_ZOMBIE:
                     proc.parent().send_signal(signal.SIGCHLD)

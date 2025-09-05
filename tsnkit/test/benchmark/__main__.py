@@ -108,6 +108,10 @@ if __name__ == "__main__":
     sig = Value("i", 0)
     oom_queue = Queue()
 
+    manager = Manager()
+    processes = manager.dict()
+    manager_pid = manager._process.ident
+
     oom = Process(
         target=killif,
         args=(
@@ -116,6 +120,7 @@ if __name__ == "__main__":
             utils.T_LIMIT,
             sig,
             oom_queue,
+            manager_pid,
         ),
     )
 
@@ -140,9 +145,6 @@ if __name__ == "__main__":
         if verbose:
             print_output(f"{_task}", str_flag(flag), output[2], output[3], output[4])
         sig.value += 1
-
-    manager = Manager()
-    processes = manager.dict()
 
     def run(alg, task_param: str, workers: int, process_dict):
         process_dict[os.getpid()] = task_param
