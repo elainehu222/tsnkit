@@ -143,7 +143,7 @@ if __name__ == "__main__":
         print(f"running {task_param}")
         # processes[os.getpid()] = task_param
         # print(os.getpid())
-        task_num = task[1]
+        task_num = task_param[1]
         path = SCRIPT_DIR + "/data/" + task_num
         stats = alg(f"{task_param[0]}-{task_num}", path + "_task.csv", path + "_topo.csv", workers=workers)
         print("succ")
