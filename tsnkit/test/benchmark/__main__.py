@@ -127,6 +127,11 @@ if __name__ == "__main__":
         _task = output[0]
         algo_name, task_num = _task.split("-")
         result = [name, task_num, "successful", output[2], output[3], output[4]]
+        if flag == utils.Result.schedulable.value:
+            try:
+                remove_configs(_task)
+            except Exception as e:
+                pass
         if flag == utils.Result.unknown.value:
             result[2] = "unknown"
         elif flag == utils.Result.unschedulable.value or flag == utils.Result.error.value:
