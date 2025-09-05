@@ -172,7 +172,6 @@ if __name__ == "__main__":
             tasks = sig.value
 
     oom.terminate()
-    gc.collect()
 
     # add the processes that timed out to the results dataframe
     while not oom_queue.empty():
@@ -184,6 +183,8 @@ if __name__ == "__main__":
         index = result_indices[name] + task_num - 1
         # ["name", "data_id", "flag", "solve_time", "total_time", "total_mem"]
         results.iloc[index, :] = [name, task_num, "unknown", process[0], process[0], round(mem, 3)]
+
+    gc.collect()
 
     results.to_csv(f"{output_affix}results.csv", index=False)
     draw(f"{output_affix}results.csv")
