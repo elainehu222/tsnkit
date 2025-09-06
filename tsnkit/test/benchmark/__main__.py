@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
     results = pd.DataFrame(
         columns=["name", "data_id", "flag", "solve_time", "total_time", "total_mem"],
-        index=np.arange(20)) # TODO:change back to 4352
+        index=np.arange(20))
 
     algo_header = "| {:<13} | {:<13} | {:<6} | {:<10} | {:<10} | {:<10}"
     sim_header = "| {:<13} | {:<6} | {:<12}"
@@ -131,8 +131,7 @@ if __name__ == "__main__":
         flag = output[1]
         _task = output[0]
         algo_name, task_num = _task.split("-")
-        print(f"name: {algo_name}, index: {result_indices[algo_name] + int(task_num) - 1}")
-        result = [name, task_num, "successful", output[2], output[3], output[4]]
+        result = [algo_name, task_num, "successful", output[2], output[3], output[4]]
         if flag == utils.Result.schedulable.value:
             try:
                 remove_configs(_task)
@@ -143,7 +142,6 @@ if __name__ == "__main__":
         elif flag == utils.Result.unschedulable.value or flag == utils.Result.error.value:
             result[2] = "infeasible"
         results.iloc[result_indices[algo_name] + int(task_num) - 1, :] = result
-        print(results.values)
         if verbose:
             print_output(f"{_task}", str_flag(flag), output[2], output[3], output[4])
         sig.value += 1
