@@ -74,8 +74,10 @@ def run(
             if args.subset:
                 if algo_name in ["jrs_nw", "ls", "smt_wa"]:
                     dataset = [*range(1, 17)]
+                    data_path = SCRIPT_DIR + "/data/"
                 else:
-                    dataset = [257, 258, 259, 260]
+                    dataset = [1, 2, 3, 4]
+                    data_path = SCRIPT_DIR + "/debug/test_cases/"
             result = pd.DataFrame(
                 columns=['algorithm', 'data id', 'total time', 'total mem', 'flag', 'error', 'log'],
                 index=range(len(dataset)), dtype=object)
