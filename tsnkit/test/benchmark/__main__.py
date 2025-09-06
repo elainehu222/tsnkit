@@ -86,7 +86,7 @@ if __name__ == "__main__":
 
     results = pd.DataFrame(
         columns=["name", "data_id", "flag", "solve_time", "total_time", "total_mem"],
-        index=np.arange(20))
+        index=np.arange(17*256))
 
     algo_header = "| {:<13} | {:<13} | {:<6} | {:<10} | {:<10} | {:<10}"
     sim_header = "| {:<13} | {:<6} | {:<12}"
