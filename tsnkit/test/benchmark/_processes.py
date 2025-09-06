@@ -46,6 +46,7 @@ def killif(main_proc, mem_limit, time_limit, sig, oom_queue, manager_pid):
     time.sleep(1)
     self_proc = os.getpid()
     mem_limit = mem_limit * 1024 ** 2
+    wait_time = 60
     pids_int = []
     while True:
         _current_time = time.time()
@@ -72,7 +73,7 @@ def killif(main_proc, mem_limit, time_limit, sig, oom_queue, manager_pid):
                         oom_queue.put([round(proc.cpu_times().user, 3), mem, proc.pid])
                         print_output("-", str(Result.unknown), proc_time, proc_time, mem / (1024 ** 2))
                         sig.value += 1
-                elif (elapse_time > time_limit * 1.1 or mem > mem_limit) and proc.pid in pids_int:
+                elif (elapse_time > (time_limit + wait_time) or mem > mem_limit) and proc.pid in pids_int:
                     proc.send_signal(signal.SIGKILL)
                     proc_time = proc.cpu_times().user
                     oom_queue.put([round(proc.cpu_times().user, 3), mem, proc.pid])
