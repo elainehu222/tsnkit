@@ -102,7 +102,6 @@ if __name__ == "__main__":
         result_indices[name] = stop
         tasks.extend([(name, n) for n in range(int(b), int(a) - 1, -1)])
         stop += int(b) - int(a) + 1
-    print(result_indices)
 
     print(algo_header.format("time", "task", "flag", "solve_time", "total_time", "total_mem", ), flush=True)
 
@@ -132,6 +131,7 @@ if __name__ == "__main__":
         flag = output[1]
         _task = output[0]
         algo_name, task_num = _task.split("-")
+        print(f"name: {algo_name}, index: {result_indices[algo_name] + int(task_num) - 1}")
         result = [name, task_num, "successful", output[2], output[3], output[4]]
         if flag == utils.Result.schedulable.value:
             try:
