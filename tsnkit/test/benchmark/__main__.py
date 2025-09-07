@@ -104,7 +104,6 @@ if __name__ == "__main__":
         stop += int(b) - int(a) + 1
 
     tasks = sorted(tasks, key=lambda t: t[1], reverse=True)
-    print(tasks)
 
     print(algo_header.format("time", "task", "flag", "solve_time", "total_time", "total_mem", ), flush=True)
 
