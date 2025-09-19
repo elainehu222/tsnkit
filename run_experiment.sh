@@ -4,7 +4,7 @@ rm -rf ./out && mkdir ./out
 
 source /home/cc/Python-3.13.7/venv/bin/activate
 
-python3 -m tsnkit.test.benchmark --methods ALL --ins 1-256 -t 7200 -o ./results/
+python3 -m tsnkit.tsnkit.test.benchmark --methods ALL --ins 1-256 -t 7200 -o ./results/
 
 # This file is loaded automatically onto nodes
 source ~/openrc
