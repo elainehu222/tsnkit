@@ -6,8 +6,6 @@ import time
 import pandas as pd
 import numpy as np
 
-from ...utils import Result
-from ... import utils
 from . import draw, killif, run, mute, print_output, str_flag
 from ... import core as utils
 from multiprocessing import Pool, cpu_count, Value, Process, Queue
@@ -127,9 +125,9 @@ if __name__ == "__main__":
             flag = output[1]
             task_num = output[0]
             result = [name, task_num, "successful", output[2], output[3], output[4]]
-            if flag == Result.unknown.value:
+            if flag == utils.Result.unknown.value:
                 result[2] = "unknown"
-            elif flag == Result.unschedulable.value or flag == Result.error.value:
+            elif flag == utils.Result.unschedulable.value or flag == utils.Result.error.value:
                 result[2] = "infeasible"
             results.iloc[total_ins + int(task_num) - 1, :] = result
             if verbose:
