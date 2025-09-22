@@ -232,9 +232,9 @@ def run(
                 # Raise error for workflow validation
                 if validation:
                     if res['error']:
-                        raise res['error']
+                        raise Exception(res['error'])
                     if res['data_id'] > 256 and res['flag'] != 'succ':
-                        raise
+                        raise Exception(f"{res['algorithm']} was not successful")
                 
                 # Handle algorithm not found case
                 if res.get('break_loop', False):
