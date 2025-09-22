@@ -231,7 +231,7 @@ def run(
 
                 # Raise error for workflow validation
                 if validation:
-                    if res['error']:
+                    if res['error'] != "none":
                         raise Exception(res['error'])
                     if res['data_id'] > 256 and res['flag'] != 'succ':
                         raise Exception(f"{res['algorithm']} was not successful")
