@@ -42,7 +42,7 @@ def process_single_dataset(args_tuple):
 
     # create schedule
     process = subprocess.Popen([py_environment, '-m', 'tsnkit.algorithms.' + algo_name, task_path, topo_path,
-                               "./", 1, f"{algo_name}-{data_id}"],
+                               "./", "1", f"{algo_name}-{data_id}"],
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE,
                                text=True)
