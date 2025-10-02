@@ -100,10 +100,10 @@ if __name__ == "__main__":
             continue
         a, b = ins[i].split("-")
         result_indices[name] = stop
-        tasks.extend([(name, n) for n in range(int(b), int(a) - 1, -1)])
+        tasks.extend([(name, n) for n in range(int(a), int(b) + 1)])
         stop += int(b) - int(a) + 1
 
-    tasks = sorted(tasks, key=lambda t: t[1], reverse=True)
+    tasks = sorted(tasks, key=lambda t: t[1])
 
     print(algo_header.format("time", "task", "flag", "solve_time", "total_time", "total_mem", ), flush=True)
 
