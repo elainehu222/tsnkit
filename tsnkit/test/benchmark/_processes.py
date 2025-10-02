@@ -9,7 +9,7 @@ from functools import partialmethod
 import psutil
 from tqdm import tqdm
 
-from ...core import Result
+from ...utils import Result
 from ...simulation import tas
 
 SCRIPT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
