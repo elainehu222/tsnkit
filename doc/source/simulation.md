@@ -24,16 +24,17 @@ python setup.py build_ext --inplace
 **Usage:**
 
 ```
-python3 -m tsnkit.simulation.tas [TASK PATH] [NETWORK PATH] [SCHEDULE PATH]
+python3 -m tsnkit.simulation.tas [TASK PATH] [CONFIG PATH]
 ```
 
-- Task path: The stream set file as described in [previous section](dataprep.md).
-- Config path: The folder containing the generated configuration files. The detailed format can be also found in [previous section](dataprep.md). *Please note this path should be the folder path that containing the configuration files, such as `./data/output/`*
-- Iter: The number of network cycle to run the simulation. Default is `5`.
-- Verbose: If set to `True`, the simulator will print the simulation log to the console. Otherwise, the simulator will only print the simulation result. Default is `False`.
+- `task`: The stream set file as described in [previous section](dataprep.md).
+- `config`: The folder containing the generated configuration files. The detailed format can be also found in [previous section](dataprep.md). *Note this should be a folder path that containing the configuration files, such as `./data/output/`*
+- `--iter`: The number of network cycles to run the simulation. Default is `1` (use `--iter N` to change).
+- `--verbose`: If set to `True` (`--verbose`), the simulator prints detailed logs; otherwise it prints a summary. Default is `False`.
+- `--no-draw`: Disable plotting by passing `--no-draw`.
+- `--output`: Save the simulation logs into a `.csv` file (by default current folder). 
 
-
-The simulator will automatically infer the network settings from the configuration files, thus the network path is not required.
+The simulator will automatically infer the network settings from the configuration files, thus a separate network path is not required.
 
 **Output:**
 
@@ -48,8 +49,6 @@ During the runtime, the script outputs logs as following to show the forwarding 
     [Bridge (0, 8)]:    Flow 0 - Arrive at 8021000
     [Listener 8]:       Flow 0 - Receive at 8023800
     ```
-
-
 
 The final log indicates any potential errors and the send/receive times for each flow:
 
@@ -87,15 +86,11 @@ The debug tool is used for quickly validating a single or multiple methods on a 
 
 **Usage**
 
-Testing a single method:
 ```
-tsnkit.test.[method] -t [total_timeout_limit] -o [path_for_output_report]
+python -m tsnkit.test.debug [methods] --ins [problem_instances] -t [total_timeout_limit] -o [path_for_output_report]
 ```
 
-Testing multiple methods:
-```
-tsnkit.test [methods] -t [total_timeout_limit] -o [path_for_output_report]
-```
+Problem instances are used as ranges (e.g. `--ins 1-50`, `--ins 150-200`). There are a total of 256 pregenerated problem instances. The command also supports test single methods, e.g., `python -m tsnkit.test.debug.ls --ins 1-16`.
 
 ## OMNeT_TSNkit
 

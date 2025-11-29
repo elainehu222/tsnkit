@@ -9,10 +9,13 @@ import argparse
 import traceback
 import itertools
 import pandas as pd
+import numpy as np
 from tqdm import tqdm
+import os
 import networkx as nx
 from .dataset_spec import generate_flowset
 from .dataset_spec import TOPO_FUNC
+from .. import core
 
 
 class DatasetGenerator:
@@ -26,6 +29,7 @@ class DatasetGenerator:
         self.topo = [topo] if isinstance(topo, int) else topo
 
     def run(self, path):
+        os.makedirs(path, exist_ok=True)
         param_combinations = list(itertools.product(
                                 self.num_stream, 
                                 self.num_sw,
@@ -53,14 +57,14 @@ class DatasetGenerator:
                             data_rate=1,
                             header=path + header + "_topo",
                         )
-                        _flowset = generate_flowset(
+                        _ = generate_flowset(
                             nx.DiGraph(net),
                             size,
                             period,
                             deadline,
                             num_stream,
                             num_sw,
-                            num_sw,
+                            num_sw if topo != 4 else int(np.sqrt(num_sw)-1) * 4,
                             path + header + "_task",
                         )
                         exp_info = [
@@ -125,7 +129,7 @@ if __name__ == "__main__":
         "--topo",
         type=int_or_int_list,
         default=0,
-        help="Topology type: 0-Line, 1-Ring, 2-Tree, 3-Mesh",
+        help="Topology type: 0-Line, 1-Ring, 2-Tree, 3-Mesh, 4-2dMesh",
     )
     parser.add_argument(
         "--output",
@@ -133,6 +137,8 @@ if __name__ == "__main__":
         default="./",
         help="Output folder path",
     )
+
+    core.parse_command_line_constants(parser)
 
     args = parser.parse_args()
     generator = DatasetGenerator(
